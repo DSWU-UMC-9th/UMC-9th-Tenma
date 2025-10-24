@@ -1,18 +1,18 @@
 package com.example.umc.global.entity;
 
 import jakarta.persistence.Column;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 public class BaseEntity {
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(name = "created_at", nullable = false)
-    private LocalTime createdAt;
+    private LocalDateTime createdAt;
 
-    @LastModifiedDate
+    @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
-    private LocalTime updatedAt;
+    private LocalDateTime updatedAt;
 }
