@@ -1,7 +1,6 @@
 package com.example.umc.domain.user.entity;
 
 import com.example.umc.domain.review.entity.Review;
-import com.example.umc.domain.mission.entity.Mission;
 import com.example.umc.domain.user.entity.mapping.UserFood;
 import com.example.umc.domain.user.entity.mapping.UserMission;
 import com.example.umc.domain.user.entity.mapping.UserTerm;
