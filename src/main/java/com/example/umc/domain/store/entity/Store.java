@@ -2,8 +2,6 @@ package com.example.umc.domain.store.entity;
 
 import com.example.umc.domain.mission.entity.Mission;
 import com.example.umc.domain.review.entity.Review;
-import com.example.umc.domain.store.entity.Category;
-import com.example.umc.domain.store.entity.Region;
 import com.example.umc.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
