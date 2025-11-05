@@ -21,6 +21,6 @@ public class Term {
     @Column(name = "name", nullable = false, length = 20)
     private String name;
 
-    @OneToMany(mappedBy = "Term")
+    @OneToMany(mappedBy = "term")
     private List<UserTerm> userTerms = new ArrayList<>();
 }

@@ -21,6 +21,6 @@ public class Food {
     @Column(name = "name", nullable = false, length = 20)
     private String name;
 
-    @OneToMany(mappedBy = "food")
+    @OneToMany(mappedBy = "food", fetch = FetchType.LAZY)
     private List<UserFood> userFoods = new ArrayList<>();
 }
