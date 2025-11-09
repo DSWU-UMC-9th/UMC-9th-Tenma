@@ -35,4 +35,7 @@ public class Review extends BaseEntity {
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
+
+    @OneToOne(mappedBy = "review")
+    private Comment comment;
 }
