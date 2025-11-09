@@ -1,19 +1,31 @@
 package com.example.umc.domain.review.repository;
 
+import com.example.umc.domain.review.dto.ReviewResponseDTO;
 import com.example.umc.domain.review.entity.Review;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    // 특정 가게 리뷰 전체
-    @Query("SELECT r FROM Review r WHERE r.store.id = :storeId")
-    List<Review> findByStoreId(@Param("storeId") Long storeId);
-
-    // 특정 유저의 리뷰
-    @Query("SELECT r FROM Review r WHERE r.user.id = :userId")
-    List<Review> findByUserId(@Param("userId") Long userId);
+    @Query("""
+        SELECT new com.example.umc.domain.review.dto.ReviewResponseDTO(
+            r.id,
+            r.user.name,
+            r.star,
+            r.content,
+            r.createdAt,
+            c.id,
+            c.content,
+            c.createdAt
+        )
+        FROM Review r
+        LEFT JOIN r.comment c
+        WHERE r.store.id = :storeId
+        ORDER BY r.createdAt DESC
+    """)
+    Page<ReviewResponseDTO> findReviewByStoreId(@Param("storeId") Long storeId, Pageable pageable);
 }
