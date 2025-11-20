@@ -9,21 +9,11 @@ import org.springframework.http.HttpStatus;
 public enum GeneralErrorCode implements BaseErrorCode{
 
     // 공통
-    BAD_REQUEST(HttpStatus.BAD_REQUEST,
-            "COMMON400_1",
-            "잘못된 요청입니다."),
-    UNAUTHORIZED(HttpStatus.UNAUTHORIZED,
-            "AUTH401_1",
-            "인증이 필요합니다."),
-    FORBIDDEN(HttpStatus.FORBIDDEN,
-            "AUTH403_1",
-            "요청이 거부되었습니다."),
-    NOT_FOUND(HttpStatus.NOT_FOUND,
-            "COMMON404_1",
-            "요청한 리소스를 찾을 수 없습니다."),
-    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR,
-            "COMMON500_1",
-            "예기치 않은 서버 에러가 발생했습니다."),
+    BAD_REQUEST(HttpStatus.BAD_REQUEST, "COMMON400_1", "잘못된 요청입니다."),
+    UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "AUTH401_1", "인증이 필요합니다."),
+    FORBIDDEN(HttpStatus.FORBIDDEN, "AUTH403_1", "요청이 거부되었습니다."),
+    NOT_FOUND(HttpStatus.NOT_FOUND, "COMMON404_1", "요청한 리소스를 찾을 수 없습니다."),
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON500_1", "예기치 않은 서버 에러가 발생했습니다."),
 
     // Store
     STORE_REGION_NOT_FOUND(HttpStatus.NOT_FOUND, "STORE404_1", "존재하지 않는 지역입니다."),
@@ -44,6 +34,13 @@ public enum GeneralErrorCode implements BaseErrorCode{
     USER_CREATE_FAILED(HttpStatus.BAD_REQUEST, "USER400_1", "회원 등록에 실패했습니다."),
     USER_UPDATE_FAILED(HttpStatus.BAD_REQUEST, "USER400_2", "회원 정보 수정에 실패했습니다."),
     USER_DELETE_FAILED(HttpStatus.BAD_REQUEST, "USER400_3", "회원 삭제에 실패했습니다."),
+
+    // Mission
+    MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "MISSION404_1", "요청한 미션을 찾을 수 없습니다."),
+    MISSION_CREATE_FAILED(HttpStatus.BAD_REQUEST, "MISSION400_1", "미션 생성에 실패했습니다."),
+    MISSION_READ_FAILED(HttpStatus.BAD_REQUEST, "MISSION400_2", "미션 조회에 실패했습니다."),
+    MISSION_UPDATE_FAILED(HttpStatus.BAD_REQUEST, "MISSION400_3", "미션 수정에 실패했습니다."),
+    MISSION_DELETE_FAILED(HttpStatus.BAD_REQUEST, "MISSION400_4", "미션 삭제에 실패했습니다.")
     ;
 
     private final HttpStatus status;
