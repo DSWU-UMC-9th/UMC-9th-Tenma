@@ -28,6 +28,7 @@ public enum GeneralErrorCode implements BaseErrorCode{
     // Store
     STORE_REGION_NOT_FOUND(HttpStatus.NOT_FOUND, "STORE404_1", "존재하지 않는 지역입니다."),
     STORE_CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "STORE404_2", "존재하지 않는 카테고리입니다."),
+    STORE_NOT_FOUND(HttpStatus.NOT_FOUND, "STORE404_3", "존재하지 않는 가게입니다."),
     STORE_CREATE_FAILED(HttpStatus.BAD_REQUEST, "STORE400_1", "가게 등록에 실패했습니다."),
     STORE_UPDATE_FAILED(HttpStatus.BAD_REQUEST, "STORE400_2", "가게 수정에 실패했습니다."),
     STORE_DELETE_FAILED(HttpStatus.BAD_REQUEST, "STORE400_3", "가게 삭제에 실패했습니다."),
