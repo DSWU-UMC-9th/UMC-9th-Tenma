@@ -40,7 +40,10 @@ public enum GeneralErrorCode implements BaseErrorCode{
     MISSION_CREATE_FAILED(HttpStatus.BAD_REQUEST, "MISSION400_1", "미션 생성에 실패했습니다."),
     MISSION_READ_FAILED(HttpStatus.BAD_REQUEST, "MISSION400_2", "미션 조회에 실패했습니다."),
     MISSION_UPDATE_FAILED(HttpStatus.BAD_REQUEST, "MISSION400_3", "미션 수정에 실패했습니다."),
-    MISSION_DELETE_FAILED(HttpStatus.BAD_REQUEST, "MISSION400_4", "미션 삭제에 실패했습니다.")
+    MISSION_DELETE_FAILED(HttpStatus.BAD_REQUEST, "MISSION400_4", "미션 삭제에 실패했습니다."),
+
+    // UserMission
+    USER_MISSION_CREATE_FAILED(HttpStatus.BAD_REQUEST, "USERMISSION400_1", "미션 도전에 실패했습니다."),
     ;
 
     private final HttpStatus status;

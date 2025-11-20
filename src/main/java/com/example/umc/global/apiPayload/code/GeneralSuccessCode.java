@@ -33,7 +33,10 @@ public enum GeneralSuccessCode implements BaseSuccessCode{
     MISSION_CREATED(HttpStatus.CREATED, "MISSION201_1", "미션이 성공적으로 생성되었습니다."),
     MISSION_READ_SUCCESS(HttpStatus.OK, "MISSION200_1", "미션이 성공적으로 조회되었습니다."),
     MISSION_UPDATED(HttpStatus.OK, "MISSION200_2", "미션이 성공적으로 수정되었습니다."),
-    MISSION_DELETED(HttpStatus.OK, "MISSION200_3", "미션이 성공적으로 삭제되었습니다.")
+    MISSION_DELETED(HttpStatus.OK, "MISSION200_3", "미션이 성공적으로 삭제되었습니다."),
+
+    // UserMission
+    USER_MISSION_CREATED(HttpStatus.CREATED, "USERMISSION201_1", "미션 도전이 성공적으로 시작되었습니다."),
     ;
 
     private final HttpStatus status;
