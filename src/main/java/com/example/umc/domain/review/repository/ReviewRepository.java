@@ -14,6 +14,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewRep
     @Query("""
         SELECT new com.example.umc.domain.review.dto.ReviewResponseDTO(
             r.id,
+            r.store.id,
             r.user.name,
             r.star,
             r.content,
@@ -28,4 +29,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewRep
         ORDER BY r.createdAt DESC
     """)
     Page<ReviewResponseDTO> findReviewByStoreId(@Param("storeId") Long storeId, Pageable pageable);
+
+    Page<Review> findByUserId(Long userId, Pageable pageable);
 }

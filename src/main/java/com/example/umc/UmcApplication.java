@@ -9,5 +9,4 @@ public class UmcApplication {
     public static void main(String[] args) {
         SpringApplication.run(UmcApplication.class, args);
     }
-
 }

@@ -25,6 +25,7 @@ public enum GeneralErrorCode implements BaseErrorCode{
 
     // Review
     REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "REVIEW404_1", "리뷰를 찾을 수 없습니다."),
+    REVIEW_LIST_EMPTY(HttpStatus.NOT_FOUND, "REVIEW404_2", "해당 유저의 리뷰가 존재하지 않습니다."),
     REVIEW_CREATE_FAILED(HttpStatus.BAD_REQUEST, "REVIEW400_1", "리뷰 작성에 실패했습니다."),
     REVIEW_UPDATE_FAILED(HttpStatus.BAD_REQUEST, "REVIEW400_2", "리뷰 수정에 실패했습니다."),
     REVIEW_DELETE_FAILED(HttpStatus.BAD_REQUEST, "REVIEW400_3", "리뷰 삭제에 실패했습니다."),
@@ -44,6 +45,8 @@ public enum GeneralErrorCode implements BaseErrorCode{
 
     // UserMission
     USER_MISSION_CREATE_FAILED(HttpStatus.BAD_REQUEST, "USERMISSION400_1", "미션 도전에 실패했습니다."),
+    USER_MISSION_LIST_EMPTY(HttpStatus.NOT_FOUND, "USERMISSION404_1", "미션 목록이 존재하지 않습니다."),
+
     ;
 
     private final HttpStatus status;

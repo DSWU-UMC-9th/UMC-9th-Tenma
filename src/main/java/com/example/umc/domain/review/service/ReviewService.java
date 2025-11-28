@@ -1,5 +1,6 @@
 package com.example.umc.domain.review.service;
 
+import com.example.umc.domain.review.converter.ReviewConverter;
 import com.example.umc.domain.review.dto.ReviewCreateRequestDTO;
 import com.example.umc.domain.review.dto.ReviewCreateResponseDTO;
 import com.example.umc.domain.review.dto.ReviewResponseDTO;
@@ -13,6 +14,8 @@ import com.example.umc.global.apiPayload.code.GeneralErrorCode;
 import com.example.umc.global.apiPayload.exception.GeneralException;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +29,7 @@ public class ReviewService {
     private final UserRepository userRepository;
     private final StoreRepository storeRepository;
 
+    /** 리뷰 작성하기 */
     @Transactional
     public ReviewCreateResponseDTO createReview(Long storeId, ReviewCreateRequestDTO request) {
 
@@ -61,5 +65,22 @@ public class ReviewService {
 
     public List<ReviewResponseDTO> getReviewsByStore(Long storeId, Integer star) {
         return reviewRepository.findReviewsByStore(storeId, star);
+    }
+
+    /** 사용자별 리뷰 목록 조회 */
+    public Page<ReviewResponseDTO> getUserReviews(Long userId, int page) {
+
+        if (!userRepository.existsById(userId)) {
+            throw new GeneralException(GeneralErrorCode.USER_NOT_FOUND);
+        }
+
+        PageRequest pageable = PageRequest.of(page, 10);
+        Page<Review> reviewPage = reviewRepository.findByUserId(userId, pageable);
+
+        if (reviewPage.isEmpty()) {
+            throw new GeneralException(GeneralErrorCode.REVIEW_LIST_EMPTY);
+        }
+
+        return reviewPage.map(ReviewConverter::toDto);
     }
 }
