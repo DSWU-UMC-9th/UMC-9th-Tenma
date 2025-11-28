@@ -4,6 +4,8 @@ import com.example.umc.domain.mission.enums.MissionStatus;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 public class UserMissionResponseDTO {
@@ -11,5 +13,10 @@ public class UserMissionResponseDTO {
     private Long userMissionId;
     private Long userId;
     private Long missionId;
+    private Long storeId;
+    private String condition;
+    private Integer point;
     private MissionStatus status;
+    private LocalDateTime deadline;
+    private LocalDateTime startedAt;   // BaseEntity.createdAt
 }

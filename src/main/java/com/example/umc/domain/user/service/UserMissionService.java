@@ -12,8 +12,12 @@ import com.example.umc.domain.user.repository.UserRepository;
 import com.example.umc.global.apiPayload.code.GeneralErrorCode;
 import com.example.umc.global.apiPayload.exception.GeneralException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +27,7 @@ public class UserMissionService {
     private final MissionRepository missionRepository;
     private final UserMissionRepository userMissionRepository;
 
+    /** 미션 도전하기 */
     @Transactional
     public UserMissionResponseDTO startMission(UserMissionRequestDTO request) {
 
@@ -51,5 +56,32 @@ public class UserMissionService {
         } catch (Exception e) {
             throw new GeneralException(GeneralErrorCode.USER_MISSION_CREATE_FAILED);
         }
+    }
+
+    /** 내가 진행중인 미션 목록 조회 */
+    public List<UserMissionResponseDTO> getProgressingMissions(Long userId, int page) {
+
+        // 유저 검증
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new GeneralException(GeneralErrorCode.USER_NOT_FOUND));
+
+        Page<UserMission> userMissions = userMissionRepository.findByUserIdAndStatus(
+                userId,
+                MissionStatus.PROGRESSING,
+                PageRequest.of(page, 10)
+        );
+
+        return userMissions.stream()
+                .map(um -> UserMissionResponseDTO.builder()
+                        .userMissionId(um.getId())
+                        .missionId(um.getMission().getId())
+                        .storeId(um.getMission().getStore().getId())
+                        .condition(um.getMission().getCondition())
+                        .point(um.getMission().getPoint())
+                        .deadline(um.getMission().getDeadline())
+                        .startedAt(um.getCreatedAt())
+                        .build()
+                )
+                .toList();
     }
 }
