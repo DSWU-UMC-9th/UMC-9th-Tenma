@@ -9,6 +9,7 @@ import com.example.umc.global.apiPayload.code.GeneralSuccessCode;
 import com.example.umc.global.validation.ValidPage;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +45,7 @@ public class ReviewController {
             @ValidPage Integer page
     ) {
 
-        List<ReviewResponseDTO> response = reviewService.getUserReviews(userId, page);
+        Page<ReviewResponseDTO> response = reviewService.getUserReviews(userId, page);
 
         return ResponseEntity
                 .status(GeneralSuccessCode.REVIEW_READ_SUCCESS.getStatus())
