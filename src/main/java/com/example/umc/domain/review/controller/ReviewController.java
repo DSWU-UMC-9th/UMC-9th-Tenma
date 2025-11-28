@@ -39,7 +39,7 @@ public class ReviewController {
 
     /** 사용자별 리뷰 목록 조회 */
     @Operation(summary = "특정 유저가 작성한 리뷰 목록 조회")
-    @GetMapping("/{userId}/reviews")
+    @GetMapping("/users/{userId}/reviews")
     public ResponseEntity<ApiResponse<Page<ReviewResponseDTO>>> getUserReviews(
             @PathVariable Long userId,
             @ValidPage Integer page
