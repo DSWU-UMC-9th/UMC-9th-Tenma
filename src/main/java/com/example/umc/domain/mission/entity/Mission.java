@@ -2,6 +2,7 @@ package com.example.umc.domain.mission.entity;
 
 import com.example.umc.domain.store.entity.Store;
 import com.example.umc.global.entity.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,9 +25,10 @@ public class Mission extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id", nullable = false)
+    @JsonIgnore
     private Store store;
 
-    @Column(nullable = false, length = 100)
+    @Column(name = "mission_condition", nullable = false, length = 100)
     private String condition;
 
     @Column(nullable = false)
