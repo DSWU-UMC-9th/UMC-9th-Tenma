@@ -6,6 +6,7 @@ import com.example.umc.domain.user.service.UserMissionService;
 import com.example.umc.global.apiPayload.ApiResponse;
 import com.example.umc.global.apiPayload.code.GeneralSuccessCode;
 import com.example.umc.global.validation.ValidPage;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ public class UserMissionController {
     private final UserMissionService userMissionService;
 
     /** 미션 도전하기 */
+    @Operation(summary = "미션 도전")
     @PostMapping
     public ResponseEntity<ApiResponse<UserMissionResponseDTO>> startMission(
             @RequestBody UserMissionRequestDTO request
@@ -34,8 +36,9 @@ public class UserMissionController {
     }
 
     /** 내가 진행 중인 미션 목록 조회 */
+    @Operation(summary = "내가 진행 중인 미션 목록 조회")
     @GetMapping("/{userId}/missions/progressing")
-    public ApiResponse<List<UserMissionResponseDTO>> getProgressingMissions(
+    public ResponseEntity<ApiResponse<Page<UserMissionResponseDTO>>> getProgressingMissions(
             @PathVariable Long userId,
             @ValidPage Integer page
     ) {

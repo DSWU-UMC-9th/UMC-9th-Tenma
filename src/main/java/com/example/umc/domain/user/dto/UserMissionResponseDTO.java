@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 public class UserMissionResponseDTO {
 
     private Long userMissionId;
-    private Long userId;
     private Long missionId;
     private Long storeId;
     private String condition;

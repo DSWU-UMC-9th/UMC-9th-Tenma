@@ -45,6 +45,8 @@ public enum GeneralErrorCode implements BaseErrorCode{
 
     // UserMission
     USER_MISSION_CREATE_FAILED(HttpStatus.BAD_REQUEST, "USERMISSION400_1", "미션 도전에 실패했습니다."),
+    USER_MISSION_LIST_EMPTY(HttpStatus.NOT_FOUND, "USERMISSION404_1", "미션 목록이 존재하지 않습니다."),
+
     ;
 
     private final HttpStatus status;

@@ -3,6 +3,7 @@ package com.example.umc.domain.user.service;
 import com.example.umc.domain.mission.entity.Mission;
 import com.example.umc.domain.mission.enums.MissionStatus;
 import com.example.umc.domain.mission.repository.MissionRepository;
+import com.example.umc.domain.user.converter.UserMissionConverter;
 import com.example.umc.domain.user.dto.UserMissionRequestDTO;
 import com.example.umc.domain.user.dto.UserMissionResponseDTO;
 import com.example.umc.domain.user.entity.User;
@@ -48,9 +49,13 @@ public class UserMissionService {
 
             return UserMissionResponseDTO.builder()
                     .userMissionId(saved.getId())
-                    .userId(user.getId())
                     .missionId(mission.getId())
+                    .storeId(mission.getStore().getId())
+                    .condition(mission.getCondition())
+                    .point(mission.getPoint())
+                    .deadline(mission.getDeadline())
                     .status(saved.getStatus())
+                    .startedAt(saved.getCreatedAt())
                     .build();
 
         } catch (Exception e) {
@@ -59,29 +64,21 @@ public class UserMissionService {
     }
 
     /** 내가 진행중인 미션 목록 조회 */
-    public List<UserMissionResponseDTO> getProgressingMissions(Long userId, int page) {
+    public Page<UserMissionResponseDTO> getProgressingMissions(Long userId, int page) {
 
-        // 유저 검증
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new GeneralException(GeneralErrorCode.USER_NOT_FOUND));
 
-        Page<UserMission> userMissions = userMissionRepository.findByUserIdAndStatus(
+        Page<UserMission> userMissionPage = userMissionRepository.findByUserIdAndStatus(
                 userId,
                 MissionStatus.PROGRESSING,
                 PageRequest.of(page, 10)
         );
 
-        return userMissions.stream()
-                .map(um -> UserMissionResponseDTO.builder()
-                        .userMissionId(um.getId())
-                        .missionId(um.getMission().getId())
-                        .storeId(um.getMission().getStore().getId())
-                        .condition(um.getMission().getCondition())
-                        .point(um.getMission().getPoint())
-                        .deadline(um.getMission().getDeadline())
-                        .startedAt(um.getCreatedAt())
-                        .build()
-                )
-                .toList();
+        if (userMissionPage.isEmpty()) {
+            throw new GeneralException(GeneralErrorCode.USER_MISSION_LIST_EMPTY);
+        }
+
+        return userMissionPage.map(UserMissionConverter::toDto);
     }
 }
