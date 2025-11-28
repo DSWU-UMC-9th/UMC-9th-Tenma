@@ -68,7 +68,7 @@ public class ReviewService {
     }
 
     /** 사용자별 리뷰 목록 조회 */
-    public List<ReviewResponseDTO> getUserReviews(Long userId, int page) {
+    public Page<ReviewResponseDTO> getUserReviews(Long userId, int page) {
 
         if (!userRepository.existsById(userId)) {
             throw new GeneralException(GeneralErrorCode.USER_NOT_FOUND);
@@ -81,6 +81,6 @@ public class ReviewService {
             throw new GeneralException(GeneralErrorCode.REVIEW_LIST_EMPTY);
         }
 
-        return ReviewConverter.toDtoList(reviewPage.getContent());
+        return reviewPage.map(ReviewConverter::toDto);
     }
 }
