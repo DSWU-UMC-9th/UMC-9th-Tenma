@@ -47,6 +47,13 @@ public enum GeneralErrorCode implements BaseErrorCode{
     USER_MISSION_CREATE_FAILED(HttpStatus.BAD_REQUEST, "USERMISSION400_1", "미션 도전에 실패했습니다."),
     USER_MISSION_LIST_EMPTY(HttpStatus.NOT_FOUND, "USERMISSION404_1", "미션 목록이 존재하지 않습니다."),
 
+    // Auth
+    AUTH_SIGNUP_FAILED(HttpStatus.BAD_REQUEST, "AUTH400_1", "회원가입에 실패했습니다."),
+    AUTH_EMAIL_DUPLICATED(HttpStatus.BAD_REQUEST, "AUTH400_2", "이미 사용 중인 이메일입니다."),
+    AUTH_LOGIN_FAILED(HttpStatus.UNAUTHORIZED, "AUTH401_1", "이메일 또는 비밀번호가 올바르지 않습니다."),
+    AUTH_NOT_LOGGED_IN(HttpStatus.UNAUTHORIZED, "AUTH401_2", "로그인이 필요한 요청입니다."),
+    AUTH_LOGOUT_FAILED(HttpStatus.BAD_REQUEST, "AUTH400_3", "로그아웃에 실패했습니다."),
+
     ;
 
     private final HttpStatus status;

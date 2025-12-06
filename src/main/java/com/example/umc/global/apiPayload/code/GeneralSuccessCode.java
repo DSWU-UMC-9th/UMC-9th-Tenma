@@ -38,6 +38,11 @@ public enum GeneralSuccessCode implements BaseSuccessCode{
     // UserMission
     USER_MISSION_CREATED(HttpStatus.CREATED, "USERMISSION201_1", "미션 도전이 성공적으로 시작되었습니다."),
     USER_MISSION_READ_SUCCESS(HttpStatus.OK, "USERMISSION200_1", "미션 목록이 성공적으로 조회되었습니다."),
+
+    // Auth
+    AUTH_SIGNUP_SUCCESS(HttpStatus.CREATED, "AUTH201_1", "회원가입이 성공적으로 완료되었습니다."),
+    AUTH_LOGIN_SUCCESS(HttpStatus.OK, "AUTH200_1", "로그인이 성공적으로 완료되었습니다."),
+    AUTH_LOGOUT_SUCCESS(HttpStatus.OK, "AUTH200_2", "로그아웃이 성공적으로 처리되었습니다."),
     ;
 
     private final HttpStatus status;
