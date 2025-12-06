@@ -7,8 +7,7 @@ import com.example.umc.domain.user.entity.mapping.UserTerm;
 import com.example.umc.domain.user.enums.Sex;
 import com.example.umc.global.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,6 +17,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user")
 public class User extends BaseEntity {
 
@@ -74,4 +75,32 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
+
+    @Builder
+    public User(String name,
+                String nickname,
+                String email,
+                String password,
+                String phoneNum,
+                Sex sex,
+                LocalDate birthDate,
+                String address,
+                Long point,
+                Long count_pass,
+                Boolean isDeleted,
+                LocalDateTime deletedAt) {
+
+        this.name = name;
+        this.nickname = nickname;
+        this.email = email;
+        this.password = password;
+        this.phoneNum = phoneNum;
+        this.sex = sex;
+        this.birthDate = birthDate;
+        this.address = address;
+        this.point = point;
+        this.count_pass = count_pass;
+        this.isDeleted = isDeleted;
+        this.deletedAt = deletedAt;
+    }
 }
