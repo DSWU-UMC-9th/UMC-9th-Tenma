@@ -1,19 +1,19 @@
 package com.example.umc.domain.auth.service;
 
-import com.example.umc.domain.auth.dto.LoginRequest;
-import com.example.umc.domain.auth.dto.LoginResponse;
-import com.example.umc.domain.auth.dto.SignupRequest;
-import com.example.umc.domain.auth.dto.SignupResponse;
+import com.example.umc.domain.auth.dto.*;
 import com.example.umc.domain.user.entity.User;
 import com.example.umc.domain.user.enums.Sex;
 import com.example.umc.domain.user.repository.UserRepository;
+
 import com.example.umc.global.apiPayload.code.GeneralErrorCode;
 import com.example.umc.global.apiPayload.exception.GeneralException;
+
+import com.example.umc.global.jwt.JwtTokenProvider;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import jakarta.servlet.http.HttpSession;
 
 import java.time.LocalDate;
 
@@ -23,15 +23,17 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
     /** 회원가입 */
     public SignupResponse signup(SignupRequest request) {
 
+        // 이메일 중복 체크
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new GeneralException(GeneralErrorCode.USER_CREATE_FAILED);
+            throw new GeneralException(GeneralErrorCode.AUTH_EMAIL_DUPLICATED);
         }
 
-// User 생성
+        // User 생성
         User user = User.builder()
                 .name(request.getName())
                 .nickname(request.getName())                 // 기본 닉네임 = 이름
@@ -55,28 +57,28 @@ public class AuthService {
                 .build();
     }
 
-    /** 로그인 (세션 저장) */
-    public LoginResponse login(LoginRequest request, HttpSession session) {
+    /** 로그인 */
+    public LoginResponse login(LoginRequest request) {
 
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new GeneralException(GeneralErrorCode.AUTH_LOGIN_FAILED));
+                .orElseThrow(() -> new GeneralException(GeneralErrorCode.USER_NOT_FOUND));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new GeneralException(GeneralErrorCode.AUTH_LOGIN_FAILED);
         }
 
-        // 세션 저장
-        session.setAttribute("LOGIN_USER", user.getId());
+        String token = jwtTokenProvider.createToken(user.getId(), user.getEmail());
 
         return LoginResponse.builder()
                 .userId(user.getId())
-                .nickname(user.getNickname())
-                .message("로그인 성공")
+                .email(user.getEmail())
+                .token(token)
                 .build();
     }
 
     /** 로그아웃 */
-    public void logout(HttpSession session) {
-        session.invalidate();
+    public void logout() {
+        // JWT는 서버 세션을 사용하지 않기 때문에 기본적으로 아무 처리 없음
+        // 필요하면 블랙리스트 또는 만료 처리 구현 가능
     }
 }

@@ -1,6 +1,8 @@
 package com.example.umc.domain.auth.dto;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor

@@ -1,57 +1,55 @@
 package com.example.umc.domain.auth.controller;
 
-import com.example.umc.domain.auth.dto.LoginRequest;
-import com.example.umc.domain.auth.dto.LoginResponse;
-import com.example.umc.domain.auth.dto.SignupRequest;
-import com.example.umc.domain.auth.dto.SignupResponse;
+import com.example.umc.domain.auth.dto.*;
 import com.example.umc.domain.auth.service.AuthService;
+
 import com.example.umc.global.apiPayload.ApiResponse;
 import com.example.umc.global.apiPayload.code.GeneralSuccessCode;
-import jakarta.servlet.http.HttpSession;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
 
     /** 회원가입 */
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse<SignupResponse>> signup(@RequestBody SignupRequest request) {
-
+    public ResponseEntity<ApiResponse<SignupResponse>> signup(
+            @RequestBody SignupRequest request
+    ) {
         SignupResponse response = authService.signup(request);
 
         return ResponseEntity
-                .status(GeneralSuccessCode.USER_CREATED.getStatus())
-                .body(ApiResponse.onSuccess(GeneralSuccessCode.USER_CREATED, response));
+                .status(GeneralSuccessCode.AUTH_SIGNUP_SUCCESS.getStatus())
+                .body(ApiResponse.onSuccess(GeneralSuccessCode.AUTH_SIGNUP_SUCCESS, response));
     }
 
     /** 로그인 */
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<LoginResponse>> login(
-            @RequestBody LoginRequest request,
-            HttpSession session
+            @RequestBody LoginRequest request
     ) {
-
-        LoginResponse response = authService.login(request, session);
+        LoginResponse response = authService.login(request);
 
         return ResponseEntity
                 .status(GeneralSuccessCode.AUTH_LOGIN_SUCCESS.getStatus())
                 .body(ApiResponse.onSuccess(GeneralSuccessCode.AUTH_LOGIN_SUCCESS, response));
     }
 
-    /** 로그아웃 */
+    /** 로그아웃 (프론트에서 토큰만 삭제) */
     @PostMapping("/logout")
-    public ResponseEntity<ApiResponse<String>> logout(HttpSession session) {
+    public ResponseEntity<ApiResponse<String>> logout() {
 
-        authService.logout(session);
+        authService.logout();
 
         return ResponseEntity
                 .status(GeneralSuccessCode.AUTH_LOGOUT_SUCCESS.getStatus())
-                .body(ApiResponse.onSuccess(GeneralSuccessCode.AUTH_LOGOUT_SUCCESS, "로그아웃 성공"));
+                .body(ApiResponse.onSuccess(GeneralSuccessCode.AUTH_LOGOUT_SUCCESS, "로그아웃 완료"));
     }
 }
