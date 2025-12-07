@@ -5,6 +5,7 @@ import com.example.umc.domain.auth.dto.LoginResponse;
 import com.example.umc.domain.auth.dto.SignupRequest;
 import com.example.umc.domain.auth.dto.SignupResponse;
 import com.example.umc.domain.user.entity.User;
+import com.example.umc.domain.user.enums.Sex;
 import com.example.umc.domain.user.repository.UserRepository;
 import com.example.umc.global.apiPayload.code.GeneralErrorCode;
 import com.example.umc.global.apiPayload.exception.GeneralException;
@@ -13,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpSession;
+
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -28,10 +31,19 @@ public class AuthService {
             throw new GeneralException(GeneralErrorCode.USER_CREATE_FAILED);
         }
 
+// User 생성
         User user = User.builder()
                 .name(request.getName())
+                .nickname(request.getName())                 // 기본 닉네임 = 이름
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .phoneNum("010-0000-0000")                   // 임시 값
+                .sex(Sex.FEMALE)                             // 기본 성별 지정 (필수 값)
+                .birthDate(LocalDate.now())                  // 임시 값 → 수정 필요
+                .address("주소 미등록")                        // 임시 값 → 수정 필요
+                .point(0L)
+                .count_pass(0L)
+                .isDeleted(false)
                 .build();
 
         User saved = userRepository.save(user);
@@ -39,6 +51,7 @@ public class AuthService {
         return SignupResponse.builder()
                 .userId(saved.getId())
                 .email(saved.getEmail())
+                .name(saved.getName())
                 .build();
     }
 
